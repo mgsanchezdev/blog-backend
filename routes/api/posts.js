@@ -46,6 +46,8 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errores: errors.array() });
     }
+
+    
     const post = await Post.create(req.body);
     res.status(200).json({
       data: post,
@@ -53,5 +55,22 @@ router.post(
     });
   }
 );
+
+router.put('/:postId', async (req, res) => {
+  const postUpadate = await Post.update(req.body, {
+    where: { id: req.params.postId },
+  });
+    
+  
+  if (postUpadate.join()=== "1") {
+    res.status(200).json({
+      message: 'post updated',
+    });
+  } else {
+    res.status(404).json({
+      message: 'the post does not exist',
+    });
+  }
+});
 
 module.exports = router;

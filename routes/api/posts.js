@@ -73,4 +73,20 @@ router.put('/:postId', async (req, res) => {
   }
 });
 
+router.delete('/:postId',async(req,res)=>{
+  const postDelete =await Post.destroy({
+    where:{id: req.params.postId}
+  })
+  console.log("postDelete",postDelete)
+  if (postDelete) {
+    res.status(200).json({
+      message: 'post deleted',
+    });
+  } else {
+    res.status(404).json({
+      message: 'the post does not exist',
+    });
+  }
+})
+
 module.exports = router;
